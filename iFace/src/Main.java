@@ -78,6 +78,11 @@ public class Main {
                     userProfile(i);
                 }
             }
+
+        }
+        if (i == 100)
+        {
+            System.out.println("Usuário não encontrado");
         }
     }
 
@@ -130,6 +135,7 @@ public class Main {
                 communityMessage(index);
             } else if (choice == 14) {
                 removeAccount(index);
+                var = true;
             } else if (choice == 15) {
                 var = true;
             }
@@ -218,21 +224,25 @@ public class Main {
 
 
     public static void friendAdd(int userIndex) {
+        int i, j;
         Scanner input = new Scanner(System.in);
         System.out.println("Amigo à adicionar:");
         String friend = input.nextLine();
         String text = "Solicitação de: ";
-        for (int i = 0; i < 100; i++) {
+        for (i = 0; i < 100; i++) {
             if (friend.equals(name[i])) {
-                for (int j = 0; j < 100; j++) {
+                for (j = 0; j < 100; j++) {
                     if (userPendingFriendship[i][j] == null) {
                         userPendingFriendship[i][j] = name[userIndex];
                         System.out.println("Solicitação enviada");
                         break;
-
                     }
                 }
             }
+        }
+        if (i == 100)
+        {
+            System.out.println("Usuário não encontrado");
         }
     }
 
@@ -270,21 +280,22 @@ public class Main {
     }
 
     public static void friendMessage(int userIndex) {
+        int i, j ,l;
         Scanner input = new Scanner(System.in);
         System.out.println("Enviar mensagem para:");
         String friend = input.nextLine();
-        for (int i = 0; i < 100; i++) {
+        for (i = 0; i < 100; i++) {
             if (friend.equals(name[i])) {
                 System.out.println("Mensagem:");
                 String message = input.nextLine();
-                for (int j = 0; j < 100; j++) {
+                for (j = 0; j < 100; j++) {
                     if (userMessages[userIndex][j] == null) {
                         String text = String.valueOf(name[userIndex]) + " disse para " + name[i] + ": " + message;
                         userMessages[userIndex][j] = text;
                         break;
                     }
                 }
-                for (int l = 0; l < 100; l++) {
+                for (l = 0; l < 100; l++) {
                     if (userMessages[i][l] == null) {
                         String text = String.valueOf(name[userIndex]) + " disse para " + name[i] + ": " + message;
                         userMessages[i][l] = text;
@@ -292,6 +303,10 @@ public class Main {
                     }
                 }
             }
+        }
+        if (i == 100)
+        {
+            System.out.println("Usuário não encontrado");
         }
     }
 
@@ -301,31 +316,31 @@ public class Main {
         System.out.println("Qual comunidade deseja enviar uma mensagem?");
         String community = input.nextLine();
         for (i = 0; i < 100; i++) {
-            if (communities[i].equals(community)) {
+            if (communities[i] != null && communities[i].equals(community)) {
                 savei = i;
                 break;
             }
         }
-        for (i = 0; i < 100; i++) {
-            if (userCommunities[userIndex][i].equals(community)) {
-                break;
-            }
-
+        if (i == 100)
+        {
+            System.out.println("Comunidade não encontrada");
         }
-        System.out.println("Mensagem:");
-        String message = input.nextLine();
-        for (j = 0; j < 100; j++) {
-            if (communitiesMessage[savei][j] == null) {
-                String text = String.valueOf(name[userIndex]) + " enviou para " + community + ": " + message;
-                communitiesMessage[savei][j] = text;
-                break;
+        else {
+            System.out.println("Mensagem:");
+            String message = input.nextLine();
+            for (j = 0; j < 100; j++) {
+                if (communitiesMessage[savei][j] == null) {
+                    String text = String.valueOf(name[userIndex]) + " enviou para " + community + ": " + message;
+                    communitiesMessage[savei][j] = text;
+                    break;
+                }
             }
-        }
-        for (l = 0; l < 100; l++) {
-            if (userMessages[userIndex][l] == null) {
-                String text = String.valueOf(name[userIndex]) + " enviou para " + community + ": " + message;
-                userMessages[userIndex][l] = text;
-                break;
+            for (l = 0; l < 100; l++) {
+                if (userMessages[userIndex][l] == null) {
+                    String text = String.valueOf(name[userIndex]) + " enviou para " + community + ": " + message;
+                    userMessages[userIndex][l] = text;
+                    break;
+                }
             }
         }
     }
@@ -388,12 +403,18 @@ public class Main {
         System.out.println("Qual comunidade deseja gerenciar?");
         String communityName = input.nextLine();
         for (i = 0; i < 100; i++) {
-            if (userCommunities[index][i].equals(communityName)) {
+            if (userCommunities[index][i] != null && userCommunities[index][i].equals(communityName)) {
                 break;
             }
 
         }
-        communityManagementSystem(index, i);
+        if (i == 100)
+        {
+            System.out.println("Comunidade não encontrada");
+        }
+        else {
+            communityManagementSystem(index, i);
+        }
     }
 
     public static void displayUserCommunities(int userIndex) {
@@ -472,12 +493,17 @@ public class Main {
         System.out.println("Comunidade a entrar:");
         String community = input.nextLine();
         for (i = 0; i < 100; i++) {
-            if (communities[i].equals(community)) {
+            if (communities[i] != null && communities[i].equals(community)) {
                 break;
             }
         }
-        System.out.println("oi");
-        communityRequestAcess(userIndex, i);
+        if (i == 100)
+        {
+            System.out.println("Comunidade não encontrada");
+        }
+        else {
+            communityRequestAcess(userIndex, i);
+        }
     }
 
     public static void communityRequestAcess(int userIndex, int communityIndex) {
